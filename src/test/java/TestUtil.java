@@ -1,17 +1,32 @@
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
 
 public class TestUtil {
+
+    private static PrintStream ORIGINAL_OUT = System.out;
+    private static PrintStream CURRENT_OUT = System.out;
+
     public static Scanner genScanner(String input) {
         return new Scanner(input);
     }
 
-    // System.out의 출력을 스트림으로 받기
     public static ByteArrayOutputStream setOutToByteArray() {
-        final ByteArrayOutputStream output = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(output));
 
-        return output;
+        ORIGINAL_OUT = System.out;
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+        System.setOut(printStream);
+        CURRENT_OUT = printStream;
+
+        return outputStream;
+
+    }
+
+    public static void clearSetOutToByteArray(ByteArrayOutputStream outputStream) throws IOException {
+        System.setOut(ORIGINAL_OUT);
+        outputStream.close();
+        CURRENT_OUT.close();
     }
 }
