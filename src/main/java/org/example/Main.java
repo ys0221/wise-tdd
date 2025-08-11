@@ -1,10 +1,13 @@
 package org.example;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-            experiment1();
+            // experiment1();
+            experiment2();
         }
     public static void experiment1() {
         /*
@@ -33,8 +36,31 @@ public class Main {
         // 줄바꿈 시 한 줄씩 출력
         String cmd = sc.nextLine();
         String saying = sc.nextLine();
-        System.out.println("입력한 명렁어" + cmd);
-        System.out.println("입력한 명언" + saying);
+        System.out.println("입력한 명렁어 " + cmd);
+        System.out.println("입력한 명언 " + saying);
+    }
+
+    public static void experiment2() {
+        System.out.println("안녕하세요"); // System.out : 모니터를 향한 통로(PrintStream 객체) -> 출력값이 모니터로 나옴
+        // 백업 -> 원래 콘솔 스트림
+        PrintStream originalOut = System.out;
+        // 코드상에서 출력 결과를 문자열로 받기
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(); // 저장소로
+        PrintStream printStream = new PrintStream(outputStream); // 모니터에서 내 저장소로 방향 수정
+        // 모니터로 출력되는게 아니라 저장소로 저장이 됨
+        System.setOut(printStream);
+        System.out.println("ㅎㅎ"); // 출력 안 됨
+        String outStr = outputStream.toString();
+        System.setOut(originalOut); // 이렇게 하면 System.out.println(outStr); 출력
+        printStream.close();
+
+        if(outStr.equals("ㅎㅎ")) {
+            System.out.println("출력 결과가 일치합니다.");
+        } else {
+            System.out.println("출력 결과가 일치하지 않습니다.");
+        }
+
+        System.out.println(outStr); // (기존) 출력 안 됨 -> System.out 이 byteArray 로 데이터를 보내고 있음
     }
 
 
