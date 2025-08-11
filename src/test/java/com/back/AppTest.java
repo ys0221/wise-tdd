@@ -15,8 +15,8 @@ public class AppTest {
         Scanner sc = TestUtil.genScanner("");
         ByteArrayOutputStream outputStream = TestUtil.setOutToByteArray();
 
-        new App(sc).run(d);
+        new App(sc).run();
         String out =outputStream.toString();
-        assertThat(out).contains("== 명언 앱 ==")
+        assertThat(out).contains("== 명언 앱 ==");
     }
 }
